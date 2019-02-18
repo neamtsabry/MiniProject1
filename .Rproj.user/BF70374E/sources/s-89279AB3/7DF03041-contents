@@ -1,0 +1,39 @@
+---
+title: "Homework #2"
+output: html_document
+author: "Neamat Sabry"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggrepel)
+```
+
+In which I plot Star Wars characters from the movie A New Hope 
+
+```{r}
+# Filter star wars data by our movie
+# as well as mass (only those thar are less
+# than 1000) and specfic species types
+
+a_new_hope <- starwars %>%
+  filter(mass < 1000, 
+         grepl("A New Hope", films), 
+         species %in% c("Rodian", "Droid", "Wookiee", "Human"))
+
+# Plot data and color it by its species
+myData <- ggplot(a_new_hope, aes(x = mass, y = height, col = species))
+
+# Now graph it and add the following labels
+myData +
+  geom_point() +
+  geom_label_repel(aes(label = name)) +
+  labs(title="Height and Mass of characters in New Hope(1977) \nSeparated by Species",
+       captions = ("Source: Star Wars API")) +
+  xlab("Mass (kilograms)") +
+  ylab("Height (centimeters)")
+
+```
+
+It was hard to figure out how to filter the species to have only three appear on the graph. But now, I know several ways I can do it and I am very satisified with the results. 
